@@ -14,14 +14,14 @@ class MyMetaData:
     self.getMetaData(self.meta, self.meta_url)
 
   def getMetaData(self, meta_dict, meta_url):
-    rsp = request.get(meta_url).text.split('\n')
+    rsp = requests.get(meta_url).text.split('\n')
     for item in rsp:
       if item.endswith('/'):
         name = item[:-1]
         meta_dict[name] = {}
         self.getMetaData(meta_dict[name], meta_url + item)
       else:
-        val = request.get(meta_url + item).text.split('\n')
+        val = requests.get(meta_url + item).text.split('\n')
         meta_dict[item] = item
 
 
