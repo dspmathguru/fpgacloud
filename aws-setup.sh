@@ -20,6 +20,6 @@ source .venv/bin/activate
 pip install -r requirements.txt
 
 # should add check if this was already added
-echo \\
-  "\n### auto added by fpgacloud/aws-setup.sh\nexport PATH=$PATH:~/fpgacloud/.venv/bin" \\
-  >> ~/.basrc
+echo -e \
+  "\n### auto added by fpgacloud/aws-setup.sh\nexport PATH=$PATH:~/fpgacloud/.venv/bin" \
+  >> ~/.bashrc
