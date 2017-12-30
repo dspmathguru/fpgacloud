@@ -10,4 +10,5 @@ if __name__ == "__main__":
   zone = myMetaData['placement']['availability-zone']
   print(zone)
   ec2 = boto3.resource('ec2', region_name=zone)
-  ec2.instances.filter(InstanceIds=myMetaData['instance-id']).stop()
+  inst_ids = list(myMetaData['instance-id'])
+  ec2.instances.filter(InstanceIds=inst_ids).stop()
