@@ -9,8 +9,10 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR
 
-[ !-e .venv] && mkdir .venv
-python3.6 -m venv .venv
+python3.6 -m venv --without-pip .venv
+source .venv/bin/activate
+curl https://bootstrap.pypa.io/get-pip.py | python
+deactivate
 source .venv/bin/activate
 
 pip install -r requirements.txt
