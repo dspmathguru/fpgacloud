@@ -9,7 +9,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR
 
-mkdir .venv
+[ !-e .venv] && mkdir .venv
 python3.6 -m venv .venv
 source .venv/bin/activate
 
