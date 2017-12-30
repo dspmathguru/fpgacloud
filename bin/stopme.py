@@ -11,9 +11,9 @@ class MyMetaData:
   meta = {}
 
   def __init__(self):
-    self.getMetaData()
+    self.getMetaData(self.meta, self.meta_url)
 
-  def getMetaData(self, meta_dict=self.meta, meta_url=self.meta_url):
+  def getMetaData(self, meta_dict, meta_url):
     rsp = request.get(meta_url).text.split('\n')
     for item in rsp:
       if item.endswith('/'):
