@@ -26,4 +26,6 @@ class MyMetaData:
 
 if __name__ == "__main__":
   myMetaData = MyMetaData()
-  print(json.dumps(myMetaData.meta))
+  print(json.dumps(myMetaData.meta, sort_keys=True,
+                   indent=2, separators=(",", ": ")))
+  print('\n')
