@@ -21,8 +21,7 @@ class MyMetaData:
         meta_dict[name] = {}
         self.getMetaData(meta_dict[name], meta_url + item)
       else:
-        val = requests.get(meta_url + item).text.split('\n')
-        meta_dict[item] = val
+        meta_dict[item] = requests.get(meta_url + item)
 
 
 if __name__ == "__main__":
