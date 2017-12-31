@@ -21,5 +21,5 @@ pip install -r requirements.txt
 
 # should add check if this was already added
 echo -e \
-  "\n### auto added by fpgacloud/aws-setup.sh\nexport PATH=$PATH:~/fpgacloud/.venv/bin" \
+  "\n### auto added by fpgacloud/aws-setup.sh\nexport PATH=$PATH:~/fpgacloud/.venv/bin:~/fpgacloud/bin\n" \
   >> ~/.bashrc
