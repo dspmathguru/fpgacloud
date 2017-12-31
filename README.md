@@ -7,3 +7,7 @@ Make a FPGA development framework for FPGA acceleration in the cloud.
 Currently there is a lot of moving parts to this sort of development requiring
 people to really understand a lot of different aspects of of cloud based FPGA
 computing.
+
+# Usage
+Right now there is not much to this environment as it is in the middle of being
+created.  
