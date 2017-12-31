@@ -7,7 +7,7 @@ import MyMetaData
 
 if __name__ == "__main__":
   myMetaData = MyMetaData.MyMetaData().meta
-  zone = myMetaData['placement']['availability-zone']
-  print(zone)
-  ec2 = boto3.resource('ec2', region_name=zone)
+  region_name = myMetaData['placement']['availability-zone'][:-1]
+  print(region_name)
+  ec2 = boto3.resource('ec2', region_name=region_name)
   ec2.Instance(myMetaData['instance-id']).stop()
