@@ -3,5 +3,5 @@
 sudo yum -y upgrade
 sudo yum -y install git
 cd /home/ec2-user
-git clone https://github.com/dspmathguru/fpgacloud.git
-./fpgacloud/aws-setup.sh
+sudo -u ec2-user git clone https://github.com/dspmathguru/fpgacloud.git
+HOME=/home/ec2-user sudo -u ec2-user ./fpgacloud/aws-setup.sh
