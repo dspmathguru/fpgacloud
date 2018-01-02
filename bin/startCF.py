@@ -2,6 +2,7 @@
 
 import boto3
 import argparse
+import pprint
 
 parser = argparse.ArgumentParser(
     description='deletes the specified cloudformation stack')
@@ -28,4 +29,5 @@ rsp = client.create_stack(StackName=stack_name, TemplateBody=data,
                                        'ParameterValue': '10.100.0.0'}],
                           OnFailure='DELETE')
 
-print(rsp)
+pp = pprint.PrettyPrinter(indent=2)
+pp.pprint(rsp)
