@@ -1,8 +1,18 @@
 #!/bin/bash
 # Setup for AWS Amazon Linux environments
 
-sudo yum install python36-devel python36-pip -y
-
+if [-f /etc/redhat-release]
+then
+  # Centos or RedHat
+  sudo yum update -y
+  sudo yum install yum-utils -y
+  sudo yum groupinstall development -y
+  sudo yum install https://centos7.iuscommunity.org/ius-release.rpm -y
+  sudo yum install python36u -y
+else
+  # Amazon OS
+  sudo yum install python36-devel python36-pip -y
+fi
 
 # get the directory of this file
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
