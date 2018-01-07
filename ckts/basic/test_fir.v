@@ -38,7 +38,7 @@ module test_fir
 
    integer idx;
    initial begin
-      $dumpfile("test_fir.lxt");
+      $dumpfile("test_fir.fst");
       $dumpvars;
       for (idx = 0; idx < N; idx = idx + 1) begin
 	 $dumpvars(0, test_fir.u1.coeffs[idx]);
