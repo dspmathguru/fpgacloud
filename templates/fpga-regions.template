@@ -1,0 +1,78 @@
+{
+  "fpga-amis": [{
+      "region-name": "us-east-1",
+      "region-desc": "US East (N. Virginia)",
+      "ami": "ami-626e9918"
+    },
+    {
+      "region-name": "us-east-2",
+      "region-desc": "US East (Ohio)",
+      "ami": "ami-b5765bd0"
+    },
+    {
+      "region-name": "us-west-1",
+      "region-desc": "US West (N. California)",
+      "ami": "ami-9cc8f9fc"
+    },
+    {
+      "region-name": "us-west-2",
+      "region-desc": "US West (Oregon)",
+      "ami": "ami-0ee61876"
+    },
+    {
+      "region-name": "ca-central-1",
+      "region-desc": "Canada (Central)",
+      "ami": "ami-e57bc281"
+    },
+    {
+      "region-name": "eu-central-1",
+      "region-desc": "EU (Frankfurt)",
+      "ami": "ami-6a8b3b05"
+    },
+    {
+      "region-name": "eu-west-1",
+      "region-desc": "EU (Ireland)",
+      "ami": "ami-6f33fa16"
+    },
+    {
+      "region-name": "eu-west-2",
+      "region-desc": "EU (London)",
+      "ami": "ami-5b8e9d3f"
+    },
+    {
+      "region-name": "eu-west-3",
+      "region-desc": "EU (Paris)",
+      "ami": "ami-f0e95e8d"
+    },
+    {
+      "region-name": "ap-southeast-1",
+      "region-desc": "Asia Pacific (Singapore)",
+      "ami": "ami-2ddaaa4e"
+    },
+    {
+      "region-name": "ap-southeast-2",
+      "region-desc": "Asia Pacific (Sydney)",
+      "ami": "ami-ded534bc"
+    },
+    {
+      "region-name": "ap-northeast-1",
+      "region-desc": "Asia Pacific (Tokyo)",
+      "ami": "ami-a1e62cc7"
+    },
+    {
+      "region-name": "ap-northeast-2",
+      "region-desc": "Asia Pacific (Seoul)",
+      "ami": "ami-41b06a2f"
+    },
+    {
+      "region-name": "ap-south-1",
+      "region-desc": "Asia Pacific (Mumbai)",
+      "ami": "ami-b91554d6"
+    },
+    {
+      "region-name": "sa-east-1",
+      "region-desc": "South America (Sao Paulo)",
+      "ami": "ami-e664188a"
+    },
+  ]
+}
