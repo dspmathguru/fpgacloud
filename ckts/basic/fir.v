@@ -19,8 +19,7 @@ module fir
    reg signed [BITWIDTH+P-1:0] acc [N-1:0];
    wire signed [BITWIDTH+P-1:0] outAcc;
    reg signed [2*BITWIDTH-1:0] 	mults [N-1:0];
-   reg signed [BITWIDTH-1:0] 	zs [N-1:0];
-   reg signed 			out_enables [N-1:0];
+   reg signed [BITWIDTH-1:0] 	zs [N-1:0];    // actually zs[N-1] is never used
    
    
    wire signed [BITWIDTH-1:0] 	outP;
@@ -32,18 +31,15 @@ module fir
 	    if (~resetn) begin
 	       mults[i] <= { BITWIDTH { 1'b0 }};
 	       zs[i] <= { BITWIDTH { 1'b0 }};
-	       out_enables[i] <= 1'b0;
 	    end
 	    else if (enable) begin
-	      if (i > 0 && i < N) begin
-	         mults[i] <= zs[i] * coeffs[i];
-	         zs[i] <= zs[i-1];
-	         out_enables[i] <= out_enables[i-1];
-	      end
-	      else if (i == 0) begin
+	      if (i == 0) begin
 	        mults[i] <= inP * coeffs[i];
 	        zs[i] <= inP;
-	        out_enables[i] <= enable;
+	      end
+	      else begin
+	         mults[i] <= zs[i-1] * coeffs[i];
+	         zs[i] <= zs[i-1];
 	      end
 	    end
 	 end
@@ -64,6 +60,8 @@ module fir
 
    assign outAcc = acc[N-1];
    assign outP = outAcc[BITWIDTH+P-1:P];
-   assign out_enable = out_enables[N-1];
+
+   always @(posedge clk) 
+     out_enable <= enable;
    
 endmodule

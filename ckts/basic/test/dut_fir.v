@@ -27,7 +27,7 @@ module dut_fir
    generate
       for (i = 0; i < N; i = i + 1) begin
 	 //assign cs[i] = coeffs[BITWIDTH*(i+1)-1:BITWIDTH*i];
-	 assign cs[i] = i;
+	 assign cs[i] = i+1;
       end
    endgenerate
 
