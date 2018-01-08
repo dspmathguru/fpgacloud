@@ -34,8 +34,10 @@ def checker(clk, resetn, enable, inP, outP, out_enable):
 
     i.next = i + 1
 
-    if out_enable == 1 and j < 16:
-      if outP != j + 1:
+    if out_enable == 1:
+      if outP != j + 1 and j < 16:
+        print("ERROR: outP = ", outP, " not same as j = ", j)
+      if outP != 0 and J > 16:
         print("ERROR: outP = ", outP, " not same as j = ", j)
       j.next = j + 1
 
