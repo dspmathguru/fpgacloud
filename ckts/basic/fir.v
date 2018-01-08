@@ -3,7 +3,7 @@ module fir
    BITWIDTH = 16,
    ACCWIDTH = 24,
    N = 16,
-   P = 4
+   P = 0   // assumes integers as input, output at this time are not clamped
 )
 (
  input wire 		    clk,
@@ -15,7 +15,7 @@ module fir
  output signed [BITWIDTH-1:0] outP
  );
    reg signed [BITWIDTH+P-1:0] acc [N-1:0];
-   reg signed [BITWIDTH+P-1:0] outAcc;
+   wire signed [BITWIDTH+P-1:0] outAcc;
    reg signed [2*BITWIDTH-1:0] mults [N-1:0];
    reg signed [BITWIDTH-1:0]   zs [N-1:0];
    

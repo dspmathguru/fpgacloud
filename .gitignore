@@ -109,3 +109,6 @@ ENV/
 *.lxt
 *.vcd
 *.fst
+
+# C and other
+*.o

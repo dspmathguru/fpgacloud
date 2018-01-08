@@ -2,10 +2,10 @@ import os
 
 from myhdl import Cosimulation
 
-cmd = "iverilog -o fir.o ../fir.v dut_fir.v"
+cmd = "iverilog -g2012 -o fir.o ../fir.v dut_fir.v"
 
 
-def fir(clk, enable, coeffs, inP, outP):
+def fir(clk, enable, inP, outP):
   os.system(cmd)
-  return Cosimulation("vvp -m myhdl.vpi fir.o",
-                      clk=clk, enable=enable, coeffs=coeffs, inP=inP, outP=outP)
+  return Cosimulation("vvp -m ./myhdl fir.o -fst",
+                      clk=clk, enable=enable, inP=inP, outP=outP)

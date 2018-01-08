@@ -1,40 +1,46 @@
-import unittest
-
-from myhdl import Simlation, Signal, delay, intbv, bin, , always
+import myhdl
+from myhdl import Simulation, Signal, delay, intbv, bin, always
 
 from fir import fir
 
-
-class TestFIR(unittest.TestCase):
-  def test1(self):
-    def test(clk, enable, coeffs, inP, outP):
-      for i in range(16):
-        coeffs[i].next = intbv(i)[16:]
-      enable.next = intbv(1)
-      for i in range(16):
-        if i == 1:
-          inP.next = intbv(1)[16:]
-        else:
-          inP.next = intbv(0)[16:]
-        yield delay(10)
-        diff = bin(coeffs[i] - outP)
-        self.assertEqual(diff.count('1'), 0)
-
-    self.runTests(test)
-
-  def runTests(self, test):
-    enable = Signal(intbv(0)[1:])
-    clk = Signal(intbv(0)[1:])
-    coeffs = []
-    for i in range(16):
-      coeffs.append(Signal(intbv(0)[16:]))
-    inP = Signal(intbv(0)[16:])
-    outP = Signal(intbv(0)[16:])
-    dut = fir(clk, enable, coeffs, inP, outP)
-    check = test(clk, enable, coeffs, inP, outP)
-    sim = Simulation(dut, check)
-    sim.run(quiet=1)
+BITWIDTH = 16
+ACCWIDTH = 24
+N = 16
+P = 4
 
 
-if __name__ = '__main__':
-  unittest.main(verbosity=2)
+def clk_driver(clk, period=10):
+  @always(delay(period // 2))
+  def driver():
+    clk.next = not clk
+
+  return driver
+
+
+def checker(clk, enable, inP, outP):
+  i = Signal(intbv(0))
+
+  @always(clk.posedge)
+  def check():
+    enable.next = intbv(1)
+    if i == 20:
+      inP.next = intbv(1)
+    else:
+      inP.next = intbv(0)
+
+    i.next = i + 1
+
+  return check
+
+
+clk = Signal(0)
+enable = Signal(0)
+inP = Signal(intbv(0)[16:])
+outP = Signal(intbv(0)[16:])
+
+clk_driver_inst = clk_driver(clk)
+dut = fir(clk, enable, inP, outP)
+check = checker(clk, enable, inP, outP)
+
+sim = Simulation(clk_driver_inst, dut, check)
+sim.run(2000)
