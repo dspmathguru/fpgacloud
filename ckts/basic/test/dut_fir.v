@@ -7,16 +7,20 @@ module dut_fir
 );
    reg 		    clk;
    reg 		    enable;
+   reg 		    resetn;
+ 		    
 
    //reg [(BITWIDTH*N)-1:0] coeffs;
    reg signed [BITWIDTH-1:0] cs [N-1:0];
    reg signed [BITWIDTH-1:0] inP;
    wire signed [BITWIDTH-1:0] outP;
+   wire 		      out_enable;
+   
 
    initial begin
       //$from_myhdl(clk, enable, coeffs, inP);
-      $from_myhdl(clk, enable, inP);
-      $to_myhdl(outP);
+      $from_myhdl(clk, resetn, enable, inP);
+      $to_myhdl(outP, out_enable);
    end
 
    genvar i;
@@ -28,7 +32,7 @@ module dut_fir
    endgenerate
 
    fir #(.BITWIDTH(BITWIDTH), .ACCWIDTH(ACCWIDTH), .N(N), .P(P)) dut
-     (clk, enable, cs, inP, outP);
+     (clk, resetn, enable, cs, inP, outP, out_enable);
 
    genvar j;
    generate
@@ -39,9 +43,9 @@ module dut_fir
 	       $dumpvars(0);
 	    end
 
-	    $dumpvars(0, cs[j]);
-	    $dumpvars(0, dut.zs[j]);
-	    $dumpvars(0, dut.mults[j]);
+	    //$dumpvars(0, cs[j]);
+	    //$dumpvars(0, dut.zs[j]);
+	    //$dumpvars(0, dut.mults[j]);
 	 end
       end
    endgenerate

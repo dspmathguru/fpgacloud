@@ -6,37 +6,48 @@ module fir
    P = 0   // assumes integers as input, output at this time are not clamped
 )
 (
- input wire 		    clk,
- input wire 		    enable,
+ input wire 		      clk,
+ input wire                   resetn, 		      
+ input wire 		      enable,
  
  input signed [BITWIDTH-1:0]  coeffs [N-1:0],
 
  input signed [BITWIDTH-1:0]  inP,
- output signed [BITWIDTH-1:0] outP
+ output signed [BITWIDTH-1:0] outP,
+ output reg 		      out_enable
  );
    reg signed [BITWIDTH+P-1:0] acc [N-1:0];
    wire signed [BITWIDTH+P-1:0] outAcc;
-   reg signed [2*BITWIDTH-1:0] mults [N-1:0];
-   reg signed [BITWIDTH-1:0]   zs [N-1:0];
+   reg signed [2*BITWIDTH-1:0] 	mults [N-1:0];
+   reg signed [BITWIDTH-1:0] 	zs [N-1:0];
+   reg signed 			out_enables [N-1:0];
    
-   wire signed [BITWIDTH-1:0]  outP;
+   
+   wire signed [BITWIDTH-1:0] 	outP;
 
-   genvar 		       i;
+   genvar 			i;
    generate
       for (i = 0; i < N; i = i+1) begin
 	 always @(posedge clk) begin
-	    if (enable) begin
-	       if (i > 0 && i < N) begin
-		  mults[i] <= zs[i] * coeffs[i];
-		  zs[i] <= zs[i-1];
-	       end
-	       else if (i == 0) begin
-		  mults[i] <= inP * coeffs[i];
-		  zs[i] <= inP;
-	       end
+	    if (~resetn) begin
+	       mults[i] <= { BITWIDTH { 1'b0 }};
+	       zs[i] <= { BITWIDTH { 1'b0 }};
+	       out_enables[i] <= 1'b0;
+	    end
+	    else if (enable) begin
+	      if (i > 0 && i < N) begin
+	         mults[i] <= zs[i] * coeffs[i];
+	         zs[i] <= zs[i-1];
+	         out_enables[i] <= out_enables[i-1];
+	      end
+	      else if (i == 0) begin
+	        mults[i] <= inP * coeffs[i];
+	        zs[i] <= inP;
+	        out_enables[i] <= enable;
+	      end
 	    end
 	 end
-      end
+      end      
    endgenerate
 
    genvar j;
@@ -53,5 +64,6 @@ module fir
 
    assign outAcc = acc[N-1];
    assign outP = outAcc[BITWIDTH+P-1:P];
+   assign out_enable = out_enables[N-1];
    
 endmodule

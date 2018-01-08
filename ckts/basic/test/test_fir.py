@@ -17,30 +17,41 @@ def clk_driver(clk, period=10):
   return driver
 
 
-def checker(clk, enable, inP, outP):
+def checker(clk, resetn, enable, inP, outP, out_enable):
   i = Signal(intbv(0))
+  j = Signal(intbv(0))
 
   @always(clk.posedge)
   def check():
-    enable.next = intbv(1)
     if i == 20:
+      resetn.next = intbv(1)
+
+    if i == 40:
+      enable.next = True
       inP.next = intbv(1)
     else:
       inP.next = intbv(0)
 
     i.next = i + 1
 
+    if enable == 1 and j < 16:
+      if outP != j:
+        print("outP = ", outP, " not same as j = ", j)
+      j.next = j + 1
+
   return check
 
 
 clk = Signal(0)
+resetn = Signal(0)
 enable = Signal(0)
 inP = Signal(intbv(0)[16:])
 outP = Signal(intbv(0)[16:])
+out_enable = Signal(0)
 
 clk_driver_inst = clk_driver(clk)
-dut = fir(clk, enable, inP, outP)
-check = checker(clk, enable, inP, outP)
+dut = fir(clk, resetn, enable, inP, outP, out_enable)
+check = checker(clk, resetn, enable, inP, outP, out_enable)
 
 sim = Simulation(clk_driver_inst, dut, check)
 sim.run(2000)
