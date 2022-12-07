@@ -5,7 +5,7 @@ awscli==1.14.17
 Babel==2.5.1
 boto3==1.5.7
 botocore==1.8.21
-certifi==2017.11.5
+certifi==2022.12.7
 chardet==3.0.4
 colorama==0.3.7
 configobj==5.0.6
